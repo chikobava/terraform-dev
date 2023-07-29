@@ -1,0 +1,25 @@
+{
+    "name": "cloud",
+    "dockerFile": "Dockerfile_prebuilt",
+    "context": "..",
+    "remoteUser": "gcloud",
+    "workspaceFolder": "/gcloud",
+    "workspaceMount": "source=${localWorkspaceFolder},target=/gcloud,type=bind,consistency=delegated",
+    "mounts": [
+        "source=${localEnv:HOME}/.ssh,target=/home/gcloud/.ssh,type=bind,consistency=cached,ro"
+    ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "hashicorp.terraform",
+                "hashicorp.hcl"
+            ]
+        }
+    },
+    "runArgs": [
+        "-v",
+        "${env:SSH_AUTH_SOCK}:${env:SSH_AUTH_SOCK}",
+        "--security-opt",
+        "seccomp=unconfined"
+    ]
+}
